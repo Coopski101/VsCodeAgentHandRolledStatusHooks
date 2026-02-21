@@ -28,8 +28,22 @@ namespace CopilotBeaconCore.Services;
 ///
 /// <para><b>Rediscovering class names after breaking changes:</b></para>
 /// <para>
-/// If a future VS Code or Copilot update renames or restructures these elements, you
-/// can locate the new names using one of these approaches:
+/// If a future VS Code or Copilot update renames or restructures these elements,
+/// run the discovery script included in this repo:
+/// </para>
+/// <code>
+///   scripts\discover-automation-classes.cmd
+/// </code>
+/// <para>
+/// It scans all open VS Code windows, checks whether the current config values
+/// still match, and if not, enters a guided discovery mode that opens a fresh
+/// VS Code window, prompts Copilot to provoke the confirmation and loading UI,
+/// diffs the automation tree before/after each step, and reports the new class
+/// names. Update <c>core.config.json</c> -&gt; <c>PaneDetector</c> with the
+/// values it outputs.
+/// </para>
+/// <para>
+/// For manual investigation you can also:
 /// </para>
 /// <list type="number">
 ///   <item>
@@ -38,13 +52,7 @@ namespace CopilotBeaconCore.Services;
 ///     property will show the CSS class string that Chromium exposes.
 ///   </item>
 ///   <item>
-///     <b>PowerShell / C# snippet</b> — call <c>AutomationElement.FromHandle(hwnd)</c>
-///     on a VS Code window, then <c>FindAll(TreeScope.Descendants, TrueCondition)</c>
-///     and dump <c>ClassName</c> for every element. Search the output for "chat-" or
-///     "confirmation" to find the relevant nodes.
-///   </item>
-///   <item>
-///     <b>VS Code DevTools</b> — open Help → Toggle Developer Tools inside VS Code,
+///     <b>VS Code DevTools</b> — open Help -&gt; Toggle Developer Tools inside VS Code,
 ///     inspect the chat panel, and note the class names on the confirmation widget and
 ///     the loading indicator. Those same class names appear in the Automation tree.
 ///   </item>
