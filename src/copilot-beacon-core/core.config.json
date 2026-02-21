@@ -1,0 +1,14 @@
+{
+  "Core": {
+    "Port": 17321,
+    "VscodeProcessName": "Code",
+    "AfkThresholdSeconds": 30,
+    "PollIntervalMs": 250,
+    "DebugLogging": false,
+    "Keywords": {
+      "RequiredApp": "copilot",
+      "WaitingKeywords": ["continue", "waiting", "approval", "proceed"],
+      "DoneKeywords": ["done", "finished", "complete"]
+    }
+  }
+}
