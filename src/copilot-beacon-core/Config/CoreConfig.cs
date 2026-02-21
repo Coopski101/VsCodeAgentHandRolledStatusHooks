@@ -9,6 +9,7 @@ public sealed class CoreConfig
     public bool DebugLogging { get; set; } = false;
     public bool FakeMode { get; set; } = false;
     public KeywordMatcherConfig Keywords { get; set; } = new();
+    public PaneDetectorConfig PaneDetector { get; set; } = new();
 }
 
 public sealed class KeywordMatcherConfig
@@ -18,4 +19,12 @@ public sealed class KeywordMatcherConfig
     ["allow edits", "run '", "command?", "continue", "waiting", "approval", "proceed"];
     public string[] DoneKeywords { get; set; } =
     ["new chat response", "done", "finished", "complete"];
+}
+
+public sealed class PaneDetectorConfig
+{
+    public string WindowClassName { get; set; } = "Chrome_WidgetWin_1";
+    public string[] WindowTitleContains { get; set; } = ["Visual Studio Code"];
+    public string ConfirmationClassName { get; set; } = "chat-confirmation-widget-container";
+    public string LoadingClassName { get; set; } = "chat-response-loading";
 }

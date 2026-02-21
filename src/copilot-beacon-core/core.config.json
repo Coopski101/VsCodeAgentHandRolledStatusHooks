@@ -10,6 +10,12 @@
       "NotificationAppNames": ["Visual Studio Code", "VS Code"],
       "WaitingKeywords": ["allow edits", "run '", "command?", "continue", "waiting", "approval", "proceed"],
       "DoneKeywords": ["new chat response", "done", "finished", "complete"]
+    },
+    "PaneDetector": {
+      "WindowClassName": "Chrome_WidgetWin_1",
+      "WindowTitleContains": ["Visual Studio Code"],
+      "ConfirmationClassName": "chat-confirmation-widget-container",
+      "LoadingClassName": "chat-response-loading"
     }
   }
 }

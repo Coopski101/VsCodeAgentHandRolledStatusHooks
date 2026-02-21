@@ -118,10 +118,10 @@ public sealed class CopilotPaneDetector : BackgroundService
             {
                 var cls = el.Current.ClassName ?? "";
 
-                if (cls.Contains("chat-confirmation-widget-container"))
+                if (cls.Contains(_config.PaneDetector.ConfirmationClassName))
                     hasConfirmation = true;
 
-                if (cls.Contains("chat-response-loading"))
+                if (cls.Contains(_config.PaneDetector.LoadingClassName))
                     hasLoading = true;
 
                 if (hasConfirmation)
@@ -185,12 +185,16 @@ public sealed class CopilotPaneDetector : BackgroundService
         var desktop = AutomationElement.RootElement;
         var children = desktop.FindAll(
             TreeScope.Children,
-            new PropertyCondition(AutomationElement.ClassNameProperty, "Chrome_WidgetWin_1")
+            new PropertyCondition(
+                AutomationElement.ClassNameProperty,
+                _config.PaneDetector.WindowClassName
+            )
         );
 
         foreach (AutomationElement win in children)
         {
-            if (win.Current.Name.Contains("Visual Studio Code"))
+            var title = win.Current.Name;
+            if (_config.PaneDetector.WindowTitleContains.Any(t => title.Contains(t)))
                 handles.Add((nint)win.Current.NativeWindowHandle);
         }
 
