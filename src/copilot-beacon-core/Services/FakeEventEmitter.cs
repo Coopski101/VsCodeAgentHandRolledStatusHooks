@@ -17,23 +17,26 @@ public sealed class FakeEventEmitter : BackgroundService
     {
         _logger.LogInformation("FakeEventEmitter started — cycling events every 10s");
 
-        var sequence = new[]
+        var sequence = new CopilotEvent[]
         {
-            (
-                "copilot.waiting",
-                (object)
-                    new ToastPayload
-                    {
-                        RawText = "[fake] Copilot is waiting for approval",
-                        Confidence = 1.0,
-                    }
-            ),
-            (
-                "copilot.done",
-                (object)
-                    new ToastPayload { RawText = "[fake] Copilot has finished", Confidence = 1.0 }
-            ),
-            ("copilot.clear", (object)new ClearPayload { Reason = "vscode_foreground" }),
+            new()
+            {
+                EventType = BeaconEventType.Waiting,
+                Source = BeaconEventSource.Fake,
+                Reason = "[fake] Copilot is waiting for approval",
+            },
+            new()
+            {
+                EventType = BeaconEventType.Done,
+                Source = BeaconEventSource.Fake,
+                Reason = "[fake] Copilot has finished",
+            },
+            new()
+            {
+                EventType = BeaconEventType.Clear,
+                Source = BeaconEventSource.Fake,
+                Reason = "[fake] VS Code came to foreground",
+            },
         };
 
         var index = 0;
@@ -42,10 +45,9 @@ public sealed class FakeEventEmitter : BackgroundService
         {
             await Task.Delay(10_000, stoppingToken);
 
-            var (name, payload) = sequence[index % sequence.Length];
-            var evt = new CopilotEvent { EventName = name, Payload = payload };
+            var evt = sequence[index % sequence.Length];
 
-            _logger.LogInformation("Emitting fake event: {Event}", name);
+            _logger.LogInformation("Emitting fake event: {Event}", evt.EventType);
             _bus.Publish(evt);
             index++;
         }

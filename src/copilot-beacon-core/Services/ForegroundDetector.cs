@@ -120,8 +120,9 @@ public sealed class ForegroundDetector : BackgroundService
                 _bus.Publish(
                     new CopilotEvent
                     {
-                        EventName = "copilot.clear",
-                        Payload = new ClearPayload { Reason = "vscode_foreground" },
+                        EventType = BeaconEventType.Clear,
+                        Source = BeaconEventSource.Foreground,
+                        Reason = "VS Code came to foreground",
                     }
                 );
             }

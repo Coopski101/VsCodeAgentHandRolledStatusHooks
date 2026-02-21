@@ -34,12 +34,12 @@ public sealed class EventBus
 
     public void Publish(CopilotEvent evt)
     {
-        if (evt.EventName is "copilot.waiting" or "copilot.done")
+        if (evt.EventType is BeaconEventType.Waiting or BeaconEventType.Done)
         {
             ActiveSignal = true;
-            CurrentMode = evt.EventName == "copilot.waiting" ? "waiting" : "done";
+            CurrentMode = evt.EventType == BeaconEventType.Waiting ? "waiting" : "done";
         }
-        else if (evt.EventName == "copilot.clear")
+        else if (evt.EventType == BeaconEventType.Clear)
         {
             if (!ActiveSignal)
                 return;

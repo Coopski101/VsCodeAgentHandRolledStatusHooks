@@ -96,8 +96,9 @@ public sealed class ToastDetector : BackgroundService
             _bus.Publish(
                 new CopilotEvent
                 {
-                    EventName = "copilot.waiting",
-                    Payload = new ToastPayload { RawText = allText, Confidence = 1.0 },
+                    EventType = BeaconEventType.Waiting,
+                    Source = BeaconEventSource.Toast,
+                    Reason = $"Toast seen: \"{allText}\"",
                 }
             );
         }
@@ -107,8 +108,9 @@ public sealed class ToastDetector : BackgroundService
             _bus.Publish(
                 new CopilotEvent
                 {
-                    EventName = "copilot.done",
-                    Payload = new ToastPayload { RawText = allText, Confidence = 1.0 },
+                    EventType = BeaconEventType.Done,
+                    Source = BeaconEventSource.Toast,
+                    Reason = $"Toast seen: \"{allText}\"",
                 }
             );
         }

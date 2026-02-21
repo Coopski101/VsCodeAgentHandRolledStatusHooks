@@ -72,11 +72,9 @@ public sealed class AfkDetector : BackgroundService
                     _bus.Publish(
                         new CopilotEvent
                         {
-                            EventName = "copilot.clear",
-                            Payload = new ClearPayload
-                            {
-                                Reason = "afk_return_while_vscode_foreground",
-                            },
+                            EventType = BeaconEventType.Clear,
+                            Source = BeaconEventSource.Afk,
+                            Reason = "User returned from AFK while VS Code is foreground",
                         }
                     );
                 }

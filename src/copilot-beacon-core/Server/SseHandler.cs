@@ -19,7 +19,7 @@ public static class SseHandler
             await foreach (var evt in reader.ReadAllAsync(ct))
             {
                 var data = JsonSerializer.Serialize(evt);
-                await context.Response.WriteAsync($"event: {evt.EventName}\n", ct);
+                await context.Response.WriteAsync($"event: {evt.EventType}\n", ct);
                 await context.Response.WriteAsync($"data: {data}\n\n", ct);
                 await context.Response.Body.FlushAsync(ct);
             }

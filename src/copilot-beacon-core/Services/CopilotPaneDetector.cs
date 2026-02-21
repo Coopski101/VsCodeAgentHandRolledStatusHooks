@@ -148,13 +148,9 @@ public sealed class CopilotPaneDetector : BackgroundService
             _bus.Publish(
                 new CopilotEvent
                 {
-                    EventName = "copilot.waiting",
-                    Payload = new ToastPayload
-                    {
-                        RawText = "[pane] Confirmation dialog visible",
-                        Confidence = 1.0,
-                        Source = "pane",
-                    },
+                    EventType = BeaconEventType.Waiting,
+                    Source = BeaconEventSource.Pane,
+                    Reason = "Confirmation dialog visible in Copilot chat pane",
                 }
             );
         }
@@ -171,13 +167,9 @@ public sealed class CopilotPaneDetector : BackgroundService
             _bus.Publish(
                 new CopilotEvent
                 {
-                    EventName = "copilot.done",
-                    Payload = new ToastPayload
-                    {
-                        RawText = "[pane] Response completed",
-                        Confidence = 1.0,
-                        Source = "pane",
-                    },
+                    EventType = BeaconEventType.Done,
+                    Source = BeaconEventSource.Pane,
+                    Reason = "Response finished generating in Copilot chat pane",
                 }
             );
         }
