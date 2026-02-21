@@ -1,7 +1,7 @@
-using Windows.UI.Notifications;
-using Windows.UI.Notifications.Management;
 using CopilotBeaconCore.Config;
 using CopilotBeaconCore.Events;
+using Windows.UI.Notifications;
+using Windows.UI.Notifications.Management;
 
 namespace CopilotBeaconCore.Services;
 
@@ -68,7 +68,9 @@ public sealed class ToastDetector : BackgroundService
 
     private void ProcessNotification(UserNotification notification)
     {
-        var binding = notification.Notification?.Visual?.GetBinding(KnownNotificationBindings.ToastGeneric);
+        var binding = notification.Notification?.Visual?.GetBinding(
+            KnownNotificationBindings.ToastGeneric
+        );
         if (binding is null)
             return;
 
@@ -95,11 +97,7 @@ public sealed class ToastDetector : BackgroundService
                 new CopilotEvent
                 {
                     EventName = "copilot.waiting",
-                    Payload = new ToastPayload
-                    {
-                        RawText = allText,
-                        Confidence = 1.0,
-                    },
+                    Payload = new ToastPayload { RawText = allText, Confidence = 1.0 },
                 }
             );
         }
@@ -110,11 +108,7 @@ public sealed class ToastDetector : BackgroundService
                 new CopilotEvent
                 {
                     EventName = "copilot.done",
-                    Payload = new ToastPayload
-                    {
-                        RawText = allText,
-                        Confidence = 1.0,
-                    },
+                    Payload = new ToastPayload { RawText = allText, Confidence = 1.0 },
                 }
             );
         }

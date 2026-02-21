@@ -15,20 +15,7 @@ public sealed class KeywordMatcherConfig
 {
     public string[] NotificationAppNames { get; set; } = ["Visual Studio Code", "VS Code"];
     public string[] WaitingKeywords { get; set; } =
-    [
-        "allow edits",
-        "run '",
-        "command?",
-        "continue",
-        "waiting",
-        "approval",
-        "proceed",
-    ];
+    ["allow edits", "run '", "command?", "continue", "waiting", "approval", "proceed"];
     public string[] DoneKeywords { get; set; } =
-    [
-        "new chat response",
-        "done",
-        "finished",
-        "complete",
-    ];
+    ["new chat response", "done", "finished", "complete"];
 }

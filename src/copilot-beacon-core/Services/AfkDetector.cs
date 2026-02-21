@@ -44,7 +44,10 @@ public sealed class AfkDetector : BackgroundService
             {
                 _consecutiveFailures++;
                 if (_consecutiveFailures == 20)
-                    _logger.LogWarning("GetLastInputInfo has failed {Count} times in a row — AFK detection may be non-functional", _consecutiveFailures);
+                    _logger.LogWarning(
+                        "GetLastInputInfo has failed {Count} times in a row — AFK detection may be non-functional",
+                        _consecutiveFailures
+                    );
                 continue;
             }
             _consecutiveFailures = 0;
@@ -83,7 +86,10 @@ public sealed class AfkDetector : BackgroundService
 
     private static long GetIdleTimeMs()
     {
-        var info = new Win32.LASTINPUTINFO { cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf<Win32.LASTINPUTINFO>() };
+        var info = new Win32.LASTINPUTINFO
+        {
+            cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf<Win32.LASTINPUTINFO>(),
+        };
         if (!Win32.GetLastInputInfo(ref info))
             return -1;
         return Environment.TickCount - (int)info.dwTime;

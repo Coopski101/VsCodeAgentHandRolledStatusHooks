@@ -51,7 +51,12 @@ internal static partial class Win32
 
     [LibraryImport("user32.dll", EntryPoint = "GetMessageW", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
-    public static partial bool GetMessage(out MSG lpMsg, nint hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+    public static partial bool GetMessage(
+        out MSG lpMsg,
+        nint hWnd,
+        uint wMsgFilterMin,
+        uint wMsgFilterMax
+    );
 
     [LibraryImport("user32.dll")]
     [return: MarshalAs(UnmanagedType.Bool)]

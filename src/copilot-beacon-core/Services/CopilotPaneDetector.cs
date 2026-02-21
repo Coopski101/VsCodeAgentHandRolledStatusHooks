@@ -65,11 +65,7 @@ public sealed class CopilotPaneDetector : BackgroundService
     private bool _wasWaiting;
     private bool _wasLoading;
 
-    public CopilotPaneDetector(
-        EventBus bus,
-        CoreConfig config,
-        ILogger<CopilotPaneDetector> logger
-    )
+    public CopilotPaneDetector(EventBus bus, CoreConfig config, ILogger<CopilotPaneDetector> logger)
     {
         _bus = bus;
         _config = config;
@@ -88,7 +84,10 @@ public sealed class CopilotPaneDetector : BackgroundService
         // event. That's fine — the EventBus has state gating that prevents duplicate
         // emissions (e.g., publishing copilot.waiting when already in waiting mode
         // is a no-op).
-        _logger.LogInformation("Copilot pane detector started (poll={Poll}ms)", _config.PollIntervalMs);
+        _logger.LogInformation(
+            "Copilot pane detector started (poll={Poll}ms)",
+            _config.PollIntervalMs
+        );
 
         while (!stoppingToken.IsCancellationRequested)
         {
