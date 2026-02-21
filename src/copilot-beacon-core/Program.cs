@@ -29,6 +29,7 @@ else
     builder.Services.AddHostedService(sp => sp.GetRequiredService<ForegroundDetector>());
     builder.Services.AddHostedService<AfkDetector>();
     builder.Services.AddHostedService<ToastDetector>();
+    builder.Services.AddHostedService<CopilotPaneDetector>();
 }
 
 var app = builder.Build();
@@ -37,6 +38,6 @@ app.MapCoreEndpoints(bus);
 
 Console.WriteLine($"copilot-beacon-core v0.2.0 listening on http://127.0.0.1:{config.Port}");
 Console.WriteLine("Endpoints: /events (SSE), /health, /state");
-Console.WriteLine(config.FakeMode ? "Mode: FAKE (cycling events every 10s)" : "Mode: LIVE (toast + foreground + AFK detection)");
+Console.WriteLine(config.FakeMode ? "Mode: FAKE (cycling events every 10s)" : "Mode: LIVE (toast + pane + foreground + AFK detection)");
 
 app.Run();
