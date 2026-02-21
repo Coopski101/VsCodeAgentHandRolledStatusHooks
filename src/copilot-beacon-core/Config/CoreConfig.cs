@@ -13,7 +13,22 @@ public sealed class CoreConfig
 
 public sealed class KeywordMatcherConfig
 {
-    public string RequiredApp { get; set; } = "copilot";
-    public string[] WaitingKeywords { get; set; } = ["continue", "waiting", "approval", "proceed"];
-    public string[] DoneKeywords { get; set; } = ["done", "finished", "complete"];
+    public string[] NotificationAppNames { get; set; } = ["Visual Studio Code", "VS Code"];
+    public string[] WaitingKeywords { get; set; } =
+    [
+        "allow edits",
+        "run '",
+        "command?",
+        "continue",
+        "waiting",
+        "approval",
+        "proceed",
+    ];
+    public string[] DoneKeywords { get; set; } =
+    [
+        "new chat response",
+        "done",
+        "finished",
+        "complete",
+    ];
 }

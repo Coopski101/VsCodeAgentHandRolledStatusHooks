@@ -49,7 +49,7 @@ internal static partial class Win32
     [LibraryImport("user32.dll")]
     public static partial nint GetForegroundWindow();
 
-    [LibraryImport("user32.dll", SetLastError = true)]
+    [LibraryImport("user32.dll", EntryPoint = "GetMessageW", SetLastError = true)]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool GetMessage(out MSG lpMsg, nint hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
@@ -57,10 +57,10 @@ internal static partial class Win32
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool TranslateMessage(in MSG lpMsg);
 
-    [LibraryImport("user32.dll")]
+    [LibraryImport("user32.dll", EntryPoint = "DispatchMessageW")]
     public static partial nint DispatchMessage(in MSG lpMsg);
 
-    [LibraryImport("user32.dll")]
+    [LibraryImport("user32.dll", EntryPoint = "PostThreadMessageW")]
     [return: MarshalAs(UnmanagedType.Bool)]
     public static partial bool PostThreadMessage(uint idThread, uint Msg, nint wParam, nint lParam);
 

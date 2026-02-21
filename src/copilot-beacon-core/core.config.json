@@ -7,9 +7,9 @@
     "DebugLogging": false,
     "FakeMode": false,
     "Keywords": {
-      "RequiredApp": "copilot",
-      "WaitingKeywords": ["continue", "waiting", "approval", "proceed"],
-      "DoneKeywords": ["done", "finished", "complete"]
+      "NotificationAppNames": ["Visual Studio Code", "VS Code"],
+      "WaitingKeywords": ["allow edits", "run '", "command?", "continue", "waiting", "approval", "proceed"],
+      "DoneKeywords": ["new chat response", "done", "finished", "complete"]
     }
   }
 }
