@@ -5,6 +5,7 @@
     "AfkThresholdSeconds": 30,
     "PollIntervalMs": 250,
     "DebugLogging": false,
+    "FakeMode": false,
     "Keywords": {
       "RequiredApp": "copilot",
       "WaitingKeywords": ["continue", "waiting", "approval", "proceed"],

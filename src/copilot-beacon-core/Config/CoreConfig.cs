@@ -7,6 +7,7 @@ public sealed class CoreConfig
     public int AfkThresholdSeconds { get; set; } = 30;
     public int PollIntervalMs { get; set; } = 250;
     public bool DebugLogging { get; set; } = false;
+    public bool FakeMode { get; set; } = false;
     public KeywordMatcherConfig Keywords { get; set; } = new();
 }
 
