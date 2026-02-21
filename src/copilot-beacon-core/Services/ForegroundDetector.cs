@@ -34,9 +34,18 @@ public sealed class ForegroundDetector : BackgroundService
 
     private void RunMessageLoop(TaskCompletionSource tcs, CancellationToken ct)
     {
+        // Capture this thread's ID so the shutdown callback (which runs on a different thread)
+        // knows which thread's message queue to post WM_QUIT into
         var threadId = Win32.GetCurrentThreadId();
 
+        // Wrap our callback in a delegate variable to prevent the GC from collecting it
+        // while unmanaged code (Windows) still holds a reference to it
         Win32.WinEventDelegate callback = OnForegroundChanged;
+
+        // Subscribe to foreground-change events system-wide.
+        // WINEVENT_OUTOFCONTEXT = deliver events via this thread's message queue
+        // rather than injecting into the target process.
+        // process=0, thread=0 = listen to ALL windows, not just ours.
         var hook = Win32.SetWinEventHook(
             Win32.EVENT_SYSTEM_FOREGROUND,
             Win32.EVENT_SYSTEM_FOREGROUND,
@@ -56,17 +65,28 @@ public sealed class ForegroundDetector : BackgroundService
 
         _logger.LogInformation("Foreground detector hook installed");
 
+        // When the app shuts down, post WM_QUIT to break out of the GetMessage loop below.
+        // PostThreadMessage is the only safe way to stop a message pump from another thread.
         ct.Register(() => Win32.PostThreadMessage(threadId, Win32.WM_QUIT, nint.Zero, nint.Zero));
 
+        // Classic Windows message pump: GetMessage blocks until a message arrives,
+        // returns true for normal messages, and false only for WM_QUIT (ending the loop).
+        // DispatchMessage routes hook-event messages to our OnForegroundChanged callback.
         while (Win32.GetMessage(out var msg, nint.Zero, 0, 0))
         {
             Win32.TranslateMessage(in msg);
             Win32.DispatchMessage(in msg);
         }
 
+        // Loop exited (WM_QUIT received) — clean up
         Win32.UnhookWinEvent(hook);
         _logger.LogInformation("Foreground detector hook removed");
+
+        // Prevent GC from collecting the delegate before we reach this point.
+        // Must come AFTER UnhookWinEvent so the delegate is alive the entire time the hook is active.
         GC.KeepAlive(callback);
+
+        // Signal to ExecuteAsync that this background service has finished
         tcs.SetResult();
     }
 
