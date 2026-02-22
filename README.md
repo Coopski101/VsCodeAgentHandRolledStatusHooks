@@ -1,4 +1,8 @@
-# Copilot Beacon
+# Copilot Beacon (v1 — Windows-native detection)
+
+> **Note:** This is **Version 1** of Copilot Beacon. It relies on Windows-specific techniques (UI Automation, Win32 hooks, WinRT toast listeners) to detect Copilot state changes.
+>
+> A **[Version 2](https://github.com/Coopski101/VsCodeAgentProvidedStatusHooks)** has since been created that takes a more **platform-agnostic** approach by consuming hooks provided directly by the VS Code Copilot extension API, eliminating the need for OS-level scraping and making the system portable across Windows, macOS, and Linux.
 
 ## The Big Picture
 
